@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Socks!</title>
+	<link rel="stylesheet" type="text/css" href="styles.css?version=1" />
+	<link rel="stylesheet" href="bulma.min.css">
+	<script src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+
+<body>
+
+
+	<div id="loading"><img id="loading-image" src="loading.gif" alt="Loading..." /></div>
+
+
+	<div id="search" style="display: none;">
+		<div class="centralize">
+			<button class="button is-inline closesearch" onClick="document.getElementById('search').style.display = 'none';"><span class="fas fa-times"></span></button>
+			<div class="control has-icons-left is-inline">
+				<input class="input is-large maxwidth" id="searchbox" type="text" onkeyup="execSearch()" placeholder="Start typing the name of your class or teacher...">
+				<span class="icon is-medium is-left"><i class="fas fa-search"></i></span>
+			</div>
+			<ul id="classUL">
+				<li id="liTemplate" style="display: none;"><a onClick="openClass('query.id')" href="#" keywords="query.keywords">query.title</a></li>
+			</ul>
+		</div>
+	</div>
+
+
+	<div class="nav">
+		<span class="cell nLeft">
+			<div style="display: inline-flex">
+			<span class="fas fa-socks" style="font-size: 24px; margin: .8vh 1vh 0 0; color: #363636;"></span>
+			<h1 class="title is-3"><b>Socks!</b></h1>
+		</div>
+		</span>
+		<span class="cell nMid">
+			<h1 class="title is-4" id="classLabel">No Class Selected</h1>
+		</span>
+		<span class="cell nRight">
+			<div style="display: inline-flex">
+			<button class="button is-primary marginRight" onClick="document.getElementById('search').style.display = ''">Change Class</button>
+			<button class="button is-info" onClick="logInFlow()" id="signIn">Sign In with Google</button>
+			<button class="button is-info" style="display: none;" onClick="logOutFlow()" id="signOut">Sign Out</button>
+		</div>
+		</span>
+	</div>
+
+
+	<div class="box" id="restraints">
+		
+		<center><button class="button is-info is-outlined is-small" id="loadMoreBtn" onClick="scrollCheck()">Show More Messages</button></center>
+		<div id="chatSession"></div>
+		<div class="chat" id="messageTemplate">
+			<div class="messageInfo"><p>Name</p></div>
+			<div class="messageInfo"><p>Time</p></div>
+			<div class="msg">Message</div>
+		</div>
+	</div>
+
+
+	<div class="box paddingFix">
+		<div class='bottomBar'>
+			<span style="display: table-cell; width: 97%; padding-right: 1%;"><input class="input is-info" id="msg" type="text" placeholder="Message"></span>
+			<span style="display: table-cell; width: 5%;"><button class="button is-info" id="sendBtn" onClick="sendChat(currentClass, document.getElementById('msg').value)">Send</button></span>
+		</div>
+	</div>
+
+
+</body>
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+<!-- Libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+
+<script>
+	// Your web app's Firebase configuration
+	var firebaseConfig = {
+		apiKey: "AIzaSyB1-1DerUXlLxYqK3SnrrAFEse5VHa_G3w",
+		authDomain: "sockschat.firebaseapp.com",
+		databaseURL: "https://sockschat.firebaseio.com",
+		projectId: "sockschat",
+		storageBucket: "sockschat.appspot.com",
+		messagingSenderId: "855365254183",
+		appId: "1:855365254183:web:fd8fa46fda4f3dacae6202"
+	};
+	// Initialize Firebase
+	firebase.initializeApp(firebaseConfig);
+	var db = firebase.firestore();
+	var provider = new firebase.auth.GoogleAuthProvider();
+</script>
+<script src="daemon.js"></script>
+
+</html>
